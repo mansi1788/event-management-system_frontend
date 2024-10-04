@@ -7,6 +7,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [role, setrole] = useState('')
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
@@ -19,7 +20,8 @@ const Register = () => {
         email,
         password,
         phone,
-        address
+        address,
+        role
       });
 
       // Handle the response from the backend
@@ -33,6 +35,7 @@ const Register = () => {
       setPassword('');
       setPhone('');
       setAddress('');
+      setrole('');
     } catch (err) {
       console.error('Registration failed:', err.response ? err.response.data : err.message);
       setError('Registration failed. Please try again.');
@@ -111,6 +114,19 @@ const Register = () => {
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
             />
           </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="role">
+              role
+            </label>
+          <input
+              type="text"
+              id="role"
+              value={role}
+              onChange={(e) => setrole(e.target.value)}
+              required
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
+            />
+            </div>
           <div className="flex items-center justify-between">
             <button
               type="submit"

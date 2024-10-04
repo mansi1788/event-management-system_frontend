@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
 import AdminLogin from './AdminLogin'; // Create AdminLogin component similarly
 import AdminRegister from './AdminRegister'; // Create AdminRegister component similarly
-import Home from './Home';
+import Home from '../Home';
 
 const Admin = () => {
   return (

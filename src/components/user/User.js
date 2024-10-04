@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import UserNavbar from './UserNavbar';
 import UserLogin from './UserLogin';
 import UserRegister from './UserRegister';
-import Home from './Home';
+import Home from '../Home';
 
 const User = () => {
   return (
