@@ -40,18 +40,6 @@ const UserDashboard = () => {
     }
   };
 
-  const handleAddGuest = (e) => {
-    e.preventDefault();
-    if (newGuest.trim() !== '') {
-      setGuestList([...guestList, newGuest]);
-      setNewGuest('');
-    }
-  };
-
-  const handleRemoveGuest = (guest) => {
-    setGuestList(guestList.filter(g => g !== guest));
-  };
-
   const fetchVendorEvents = async () => {
     setLoading(true);
     try {
@@ -84,6 +72,12 @@ const UserDashboard = () => {
             <div className="mr-6">
               <a className="text-gray-700 hover:text-pink-600 transition duration-300" href="/">Home</a>
             </div>
+            <div className="mr-6">
+              <a className="text-gray-700 hover:text-pink-600 transition duration-300" href="/user/register">Register</a>
+            </div>
+            <div className="mr-6">
+              <a className="text-gray-700 hover:text-pink-600 transition duration-300" href="/user/login">Login</a>
+            </div>
           </div>
         </div>
       </nav>
@@ -108,88 +102,14 @@ const UserDashboard = () => {
                 />
                 <div className="p-4">
                   <h3 className="text-xl font-semibold text-gray-800">{event.name || event.title}</h3>
-                  <p className="text-gray-600 mt-2">Click to explore the {event.name?.toLowerCase() || event.title?.toLowerCase()} event ideas.</p>
+                  <p className="text-gray-600 mt-2">
+                    Click to explore the {event.name?.toLowerCase() || event.title?.toLowerCase()} event ideas.</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
-
-      {/* Main Content */}
-      <div className="container mx-auto p-6">
-        {/* Guest List Section */}
-        <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
-          <h2 className="text-2xl font-bold text-pink-600 mb-4 flex items-center"><FaUsers className="mr-2" /> Guest List</h2>
-          <form onSubmit={handleAddGuest} className="flex mb-4">
-            <input
-              type="text"
-              value={newGuest}
-              onChange={(e) => setNewGuest(e.target.value)}
-              placeholder="Enter guest name"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-pink-500 mr-2"
-            />
-            <button
-              type="submit"
-              className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition duration-300"
-            >
-              Add Guest
-            </button>
-          </form>
-          {guestList.length > 0 ? (
-            <ul>
-              {guestList.map((guest, index) => (
-                <li key={index} className="flex justify-between items-center border-b py-2">
-                  {guest}
-                  <button
-                    onClick={() => handleRemoveGuest(guest)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    Remove
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No guests added yet. Start building your guest list now!</p>
-          )}
-        </div>
-{/* 
-        {/* My Events Section */}
-        {/* <div className="bg-white p-6 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">My Events</h2>
-          {loading ? (
-            <p>Loading events...</p>
-          ) : events.length > 0 ? (
-            <ul>
-              {events.map((event) => (
-                <li key={event._id} className="flex justify-between items-center border-b py-2">
-                  <div>
-                    <h3 className="font-semibold">{event.title}</h3>
-                    <p className="text-gray-600">{event.description}</p>
-                    <p className="text-gray-800">Price: ${event.price}</p>
-                  </div>
-                  <img src={event.images[0]} alt={event.title} className="w-20 h-20 object-cover rounded-md" />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No events added yet.</p>
-          )}
-        </div> */} */
-
-        {/* Order Status Section */}
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-green-600 mb-4 flex items-center"><FaCheckCircle className="mr-2" /> Order Status</h2>
-          <p className="text-gray-700 mb-4">{orderStatus}</p>
-          <button
-            onClick={() => setOrderStatus('Confirmed')}
-            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300"
-          >
-            Confirm Order
-          </button>
-        </div>
-      </div>
     </div>
   );
 };

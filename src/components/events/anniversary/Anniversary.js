@@ -41,12 +41,12 @@ const Anniversary = () => {
           </div>
 
           {/* Wedding Types Section */}
-          <h2 className="text-3xl font-bold mt-12 mb-6">Types of Weddings</h2>
+          <h2 className="text-3xl font-bold mt-12 mb-6">Types of Anniversary Party</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Destination Wedding */}
             <div className="relative bg-cover bg-center rounded-lg h-64" style={{ backgroundImage: 'url(https://images.pexels.com/photos/24334710/pexels-photo-24334710/free-photo-of-woman-and-man-in-traditional-clothing-in-wedding-ceremony.jpeg?auto=compress&cs=tinysrgb&w=600)' }}>
               <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex flex-col justify-center items-center text-white p-4">
-                <h3 className="text-2xl font-bold mb-2">Destination Wedding</h3>
+                <h3 className="text-2xl font-bold mb-2">Destination Anniversary Party</h3>
                 <p className="text-sm mb-4">Have a magical wedding in a stunning location of your choice.</p>
                 <button onClick={() => handleDetailRedirect('destination-wedding')} className="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                   More Details
@@ -57,7 +57,7 @@ const Anniversary = () => {
             {/* Beach Wedding */}
             <div className="relative bg-cover bg-center rounded-lg h-64" style={{ backgroundImage: 'url(https://images.pexels.com/photos/169196/pexels-photo-169196.jpeg?auto=compress&cs=tinysrgb&w=600)' }}>
               <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex flex-col justify-center items-center text-white p-4">
-                <h3 className="text-2xl font-bold mb-2">Beach Wedding</h3>
+                <h3 className="text-2xl font-bold mb-2">Beach Anniversary Party</h3>
                 <p className="text-sm mb-4">Celebrate your love with a romantic beach wedding.</p>
                 <button onClick={() => handleDetailRedirect('beach-wedding')} className="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                   More Details
@@ -68,7 +68,7 @@ const Anniversary = () => {
             {/* Traditional Wedding */}
             <div className="relative bg-cover bg-center rounded-lg h-64" style={{ backgroundImage: 'url(https://www.tourmyindia.com/blog//wp-content/uploads/2018/10/Culture-Bank.jpg)' }}>
               <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex flex-col justify-center items-center text-white p-4">
-                <h3 className="text-2xl font-bold mb-2">Traditional Wedding</h3>
+                <h3 className="text-2xl font-bold mb-2">Traditional Anniversary Party</h3>
                 <p className="text-sm mb-4">Enjoy the beauty of a classic traditional wedding.</p>
                 <button onClick={() => handleDetailRedirect('traditional-wedding')} className="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                   More Details

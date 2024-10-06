@@ -45,6 +45,10 @@ const VendorDashboard = () => {
   };
 
   // Handle adding a new event
+  const handleDeleteEvent = (eventId) => {
+    setEvents((prevEvents) => prevEvents.filter((event) => event._id !== eventId));
+  };
+  
  
   
     const handleAddEvent = async (e) => {
@@ -96,9 +100,9 @@ const VendorDashboard = () => {
           <h1 className="text-3xl font-bold text-pink-600">Eventify!</h1>
           <div className="flex items-center">
             <div className="mr-6">
-              <a className="text-gray-700 hover:text-pink-600 transition duration-300" href="/">Home</a>
-              <a className="text-gray-700 hover:text-pink-600 transition duration-300" href="/vendor/register">Register</a>
-              <a className="text-gray-700 hover:text-pink-600 transition duration-300" href="/vendor/login">Login</a>
+              <a className="text-gray-700 hover:text-pink-600 transition m-5 duration-300" href="/">Home</a>
+              <a className="text-gray-700 hover:text-pink-600 transition m-5 duration-300" href="/vendor/register">Register</a>
+              <a className="text-gray-700 hover:text-pink-600 transition m-5 duration-300" href="/vendor/login">Login</a>
             </div>
           </div>
         </div>
@@ -171,8 +175,14 @@ const VendorDashboard = () => {
                   <div>
                     <h3 className="font-semibold">{event.title}</h3>
                     <p className="text-gray-600">{event.description}</p>
-                    <p className="text-gray-800">Price: ${event.price}</p>
+                    <p className="text-gray-800">Price: Rs. {event.price*50}</p>
                   </div>
+                  <button
+  onClick={() => handleDeleteEvent(event._id)}
+  className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition duration-300"
+>
+  Delete
+</button>
                   <img src={event.images[0]} alt={event.title} className="w-20 h-20 object-cover rounded-md" />
                 </li>
               ))}

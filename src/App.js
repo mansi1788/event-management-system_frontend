@@ -2,6 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import User from './components/user/User';
+import UserRegister from './components/user/UserRegister';
+import UserLogin from './components/user/UserLogin';
+
 import Vendor from './components/vendor/Vendor';
 import Admin from './components/admin/Admin';
 import UserDashboard from './components/user/Userdashboard';
@@ -11,7 +14,6 @@ import EventDetailPage from './components/vendor/EvemtDetails';
 import Wedding from './components/events/Wedding';
 
 import DestinationWedding from './components/events/DestinationWedding';
-import Navbar from './components/Navbar';
 import BeachDestination from './components/events/BeachDestination';
 import TraditionalDestination from './components/events/TraditionalDestination';
 import './FontAwesome'; 
@@ -31,6 +33,7 @@ import VendorDashboard from './components/vendor/Vendordashboard';
 
 
 
+
 const App = () => {
   return (
     <CartProvider>
@@ -46,6 +49,8 @@ const App = () => {
         {/* user routes */}
         <Route path="/user/*" element={<User />} />
         <Route path="/user/dashboard" element={<UserDashboard />} />
+        <Route path="/user/register" element={<UserRegister/>}/>
+        <Route path="/user/login" element={<UserLogin/>}/>
 
 
         {/* event route */}
