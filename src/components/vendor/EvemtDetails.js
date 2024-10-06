@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 const EventDetailPage = () => {
   const { eventName } = useParams();
-
   const eventDetails = {
     wedding: {
       name: 'Wedding',

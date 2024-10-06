@@ -3,82 +3,79 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  // Handle input change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
 
     try {
-      // Replace with your backend login endpoint
-      const response = await axios.post('http://localhost:8080/api/v1/auth/login', {
-        email,
-        password,
-      });
-
-      // Handle the response from the backend
-      console.log('Login successful:', response.data);
-
-      // Store the token in localStorage or other storage if needed
-      localStorage.setItem('token', response.data.token);
-
-      // Check if the user is a vendor and redirect accordingly
-      if (response.data.user.role === 'vendor') {
-        navigate('/vendor-dashboard'); // Redirect to the vendor dashboard
-      } else {
-        navigate('/vendor/dashboard'); // Redirect to a default page or user dashboard
-      }
-    } catch (err) {
-      setError('Invalid credentials. Please try again.');
-      console.error('Login failed:', err);
+      const response = await axios.post('http://localhost:8080/api/v1/auth/login', formData);
+      localStorage.setItem('token', response.data.token); // Store token in local storage
+      navigate('/vendor/dashboard'); // Redirect to vendor dashboard
+    } catch (error) {
+      console.error('Error logging in:', error);
+      setError('Login failed. Please check your credentials and try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
-            />
-          </div>
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-          <div className="flex items-center justify-between">
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-              Login
-            </button>
-          </div>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-red-500">
+      <div className="bg-white p-8 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-pink-600 mb-4">Vendor Login</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            className="w-full mb-4 px-4 py-2 border rounded-lg"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Password"
+            className="w-full mb-4 px-4 py-2 border rounded-lg"
+            required
+          />
+          <button
+            type="submit"
+            className={`bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition duration-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
         </form>
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+        <p className="mt-4">
+          Don't have an account? <a href="/register" className="text-pink-600 hover:underline">Register here</a>
+        </p>
       </div>
     </div>
   );
 };
+
 export default Login;

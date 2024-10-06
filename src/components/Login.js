@@ -10,10 +10,16 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      // Replace with your backend login endpoint
+    //  Replace with your backend login endpoint
       const response = await axios.post('http://localhost:8080/api/v1/auth/login', {
         email,
         password,
+      // const response = await axios.post('http://localhost:8080/api/v1/auth/login', {
+      //   email: 'vendor@example.com',
+      //   password: 'password',
+      //   role: 'vendor'
+      
+      
       });
       
       // Handle the response from the backend

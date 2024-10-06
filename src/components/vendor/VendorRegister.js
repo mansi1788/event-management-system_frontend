@@ -1,141 +1,126 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [role, setrole] = useState('')
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    address: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
+  // Handle input change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
+    setSuccessMessage('');
 
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/auth/register', {
-        name,
-        email,
-        password,
-        phone,
-        address,
-        role
+      await axios.post('http://localhost:8080/api/v1/auth/register', formData);
+      setSuccessMessage('Registration successful! You can log in now.');
+      setFormData({
+        name: '',
+        email: '',
+        password: '',
+        phone: '',
+        address: ''
       });
-
-      // Handle the response from the backend
-      console.log('Registration successful:', response.data);
-      setSuccess('Registration successful! You can now log in.');
-      setError(null); // Clear any previous errors
-
-      // Reset form fields
-      setName('');
-      setEmail('');
-      setPassword('');
-      setPhone('');
-      setAddress('');
-      setrole('');
-    } catch (err) {
-      console.error('Registration failed:', err.response ? err.response.data : err.message);
-      setError('Registration failed. Please try again.');
+    } catch (error) {
+      console.error('Error registering:', error);
+      setError('Registration failed. Please check your inputs and try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
-        {success && <p className="text-green-500 text-sm mb-4">{success}</p>}
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-        <form onSubmit={handleRegister}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
-              Phone Number
-            </label>
-            <input
-              type="text"
-              id="phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">
-              Address
-            </label>
-            <input
-              type="text"
-              id="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="role">
-              role
-            </label>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-red-500">
+      <div className="bg-white p-8 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-pink-600 mb-4">Vendor Registration</h2>
+        <form onSubmit={handleSubmit}>
           <input
-              type="text"
-              id="role"
-              value={role}
-              onChange={(e) => setrole(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500"
-            />
-            </div>
-          <div className="flex items-center justify-between">
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-              Register
-            </button>
-          </div>
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Name"
+            className="w-full mb-4 px-4 py-2 border rounded-lg"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            className="w-full mb-4 px-4 py-2 border rounded-lg"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Password"
+            className="w-full mb-4 px-4 py-2 border rounded-lg"
+            required
+          />
+          <input
+            type="text"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Phone"
+            className="w-full mb-4 px-4 py-2 border rounded-lg"
+            required
+          />
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            placeholder="Address"
+            className="w-full mb-4 px-4 py-2 border rounded-lg"
+            required
+          />
+           <input
+            type="text"
+            name="role"
+            value="2"
+            onChange={handleChange}
+            placeholder="role"
+            className="w-full mb-4 px-4 py-2 border rounded-lg"
+            readOnly
+          />
+          <button
+            type="submit"
+            className={`bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition duration-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={loading}
+          >
+            {loading ? 'Registering...' : 'Register'}
+          </button>
         </form>
+        {successMessage && <p className="text-green-500 mt-2">{successMessage}</p>}
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+        <p className="mt-4">
+          Already have an account? <a href="/vendor/login" className="text-pink-600 hover:underline">Login here</a>
+        </p>
       </div>
     </div>
   );

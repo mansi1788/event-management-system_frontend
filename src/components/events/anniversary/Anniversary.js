@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Wedding = () => {
+const Anniversary = () => {
   const navigate = useNavigate();
 
   const handleDetailRedirect = (type) => {
@@ -29,8 +29,8 @@ const Wedding = () => {
       {/* Content Section */}
       <section className="relative pt-24 text-center text-white">
         <div className="container mx-auto p-8">
-          <h2 className="text-5xl font-bold mb-4">Wedding Event</h2>
-          <p className="text-lg mb-8">Explore the beauty and elegance of our wedding packages.</p>
+          <h2 className="text-5xl font-bold mb-4">Anniversary Event</h2>
+          <p className="text-lg mb-8">Explore the beauty and elegance of our Anniversary packages.</p>
 
           {/* Image Gallery */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -82,4 +82,4 @@ const Wedding = () => {
   );
 };
 
-export default Wedding;
+export default Anniversary;
