@@ -7,7 +7,6 @@ import Admin from './components/admin/Admin';
 import UserDashboard from './components/user/Userdashboard';
 import AdminDashboard from './components/admin/Admindashboard';
 import ViewItem from './components/vendor/ViewItem';
-import VendorPage from './components/vendor/VendorPage';
 import EventDetailPage from './components/vendor/EvemtDetails';
 import Wedding from './components/events/Wedding';
 
@@ -37,9 +36,9 @@ const App = () => {
     <CartProvider>
     <WishlistProvider>
     <Router>
-      <div className="min-h-screen">
-        {/* Navbar Component */}
-        <Navbar />
+      {/* <div className="min-h-screen">
+       
+        <Navbar /> */}
       <Routes>
       
         <Route path="/" element={<Home />} />  
@@ -80,7 +79,7 @@ const App = () => {
               <Route path="/wishlist" element={<Wishlist />} />
 
       </Routes>
-      </div>
+      {/* </div> */}
 
     </Router>
     </WishlistProvider>

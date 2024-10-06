@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUsers, FaCheckCircle } from 'react-icons/fa';
+import axios from 'axios';
 
 const UserDashboard = () => {
   const [selectedEvents, setSelectedEvents] = useState([]);
@@ -8,13 +9,17 @@ const UserDashboard = () => {
   const [orderStatus, setOrderStatus] = useState('Pending');
   const [isEventDropdownOpen, setIsEventDropdownOpen] = useState(false);
   const [newGuest, setNewGuest] = useState('');
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const navigate = useNavigate();
 
-  const events = [
+  // Predefined events
+  const predefinedEvents = [
     { name: 'Wedding', img: 'https://media.istockphoto.com/id/1314780540/photo/indian-traditional-wedding-ceremony-photography.jpg?b=1&s=612x612&w=0&k=20&c=M9fUJtk8veFCZjE96JEKe-p3fpuwg8wutyMzfqSBTd0=' },
-    { name: 'Birthday Party', img:
-     'https://images.pexels.com/photos/1543762/pexels-photo-1543762.jpeg?auto=compress&cs=tinysrgb&w=600' },
+    { name: 'Birthday Party', img: 'https://images.pexels.com/photos/1543762/pexels-photo-1543762.jpeg?auto=compress&cs=tinysrgb&w=600' },
     { name: 'Anniversary', img: 'https://images.pexels.com/photos/11219290/pexels-photo-11219290.jpeg?auto=compress&cs=tinysrgb&w=600' }
   ];
 
@@ -47,6 +52,28 @@ const UserDashboard = () => {
     setGuestList(guestList.filter(g => g !== guest));
   };
 
+  const fetchVendorEvents = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('http://localhost:8080/events', {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}` // Assuming you're storing JWT token in localStorage
+        }
+      });
+      setEvents(response.data); // Set the events from the API
+      setError(''); // Clear error message
+    } catch (error) {
+      console.error(error);
+      setError('Failed to fetch vendor events. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchVendorEvents();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-red-500">
       {/* Navbar */}
@@ -67,20 +94,21 @@ const UserDashboard = () => {
           <h2 className="text-5xl font-bold mb-4">Let's Plan Your Perfect Event!</h2>
           <p className="text-lg mb-8">Create magical moments with Eventify. Manage events, track guests, and confirm bookings with ease.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {events.map((event, index) => (
+            {/* Display predefined and API fetched events */}
+            {predefinedEvents.concat(events).map((event, index) => (
               <div
                 key={index}
                 className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-xl cursor-pointer"
-                onClick={() => handleSelectEvent(event.name)}
+                onClick={() => handleSelectEvent(event.name || event.title)}
               >
                 <img
-                  src={event.img}
-                  alt={event.name}
+                  src={event.img || (event.images && event.images[0])}
+                  alt={event.name || event.title}
                   className="w-full h-40 object-cover"
                 />
                 <div className="p-4">
-                  <h3 className="text-xl font-semibold text-gray-800">{event.name}</h3>
-                  <p className="text-gray-600 mt-2">Click to explore the {event.name.toLowerCase()} event ideas.</p>
+                  <h3 className="text-xl font-semibold text-gray-800">{event.name || event.title}</h3>
+                  <p className="text-gray-600 mt-2">Click to explore the {event.name?.toLowerCase() || event.title?.toLowerCase()} event ideas.</p>
                 </div>
               </div>
             ))}
@@ -126,6 +154,29 @@ const UserDashboard = () => {
             <p>No guests added yet. Start building your guest list now!</p>
           )}
         </div>
+{/* 
+        {/* My Events Section */}
+        {/* <div className="bg-white p-6 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">My Events</h2>
+          {loading ? (
+            <p>Loading events...</p>
+          ) : events.length > 0 ? (
+            <ul>
+              {events.map((event) => (
+                <li key={event._id} className="flex justify-between items-center border-b py-2">
+                  <div>
+                    <h3 className="font-semibold">{event.title}</h3>
+                    <p className="text-gray-600">{event.description}</p>
+                    <p className="text-gray-800">Price: ${event.price}</p>
+                  </div>
+                  <img src={event.images[0]} alt={event.title} className="w-20 h-20 object-cover rounded-md" />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No events added yet.</p>
+          )}
+        </div> */} */
 
         {/* Order Status Section */}
         <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -143,4 +194,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default UserDashboard

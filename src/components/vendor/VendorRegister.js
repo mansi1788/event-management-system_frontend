@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const VENDOR_ROLE = 2; // Constant for vendor role
+
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     phone: '',
-    address: ''
+    address: '',
+    role: VENDOR_ROLE // Include the role in formData
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -39,8 +42,10 @@ const Register = () => {
         email: '',
         password: '',
         phone: '',
-        address: ''
+        address: '',
+        role: VENDOR_ROLE // Reset role after successful registration
       });
+      navigate('/vendor/login'); // Redirect to login after successful registration
     } catch (error) {
       console.error('Error registering:', error);
       setError('Registration failed. Please check your inputs and try again.');
@@ -99,14 +104,10 @@ const Register = () => {
             className="w-full mb-4 px-4 py-2 border rounded-lg"
             required
           />
-           <input
-            type="text"
+          <input
+            type="hidden" // Change to hidden input to avoid displaying to users
             name="role"
-            value="2"
-            onChange={handleChange}
-            placeholder="role"
-            className="w-full mb-4 px-4 py-2 border rounded-lg"
-            readOnly
+            value={formData.role} // Use the constant value
           />
           <button
             type="submit"

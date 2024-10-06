@@ -25,7 +25,7 @@ const Login = () => {
       localStorage.setItem('token', response.data.token);
 
       // Check if the user is a vendor and redirect accordingly
-      if (response.data.user.role === 'user') {
+      if (response.data.user.role === '1') {
         navigate('/user-dashboard'); // Redirect to the vendor dashboard
       } else {
         navigate('/user/dashboard'); // Redirect to a default page or user dashboard
