@@ -7,6 +7,8 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-red-500">
     <div className="min-h-screen flex flex-col justify-center items-center">
+    <h1 className="text-5xl font-bold text-center mb-8">Event Management System</h1>
+
       <h1 className="text-4xl font-bold text-center mb-8">Welcome to the Portal</h1>
 
       <div className="flex flex-col md:flex-row justify-around items-center w-full max-w-5xl gap-8 px-4">

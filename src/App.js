@@ -29,6 +29,8 @@ import Destinationbirthday from './components/events/Birthday/Destinationbirthda
 import VendorLogin from './components/vendor/VendorLogin';
 import VendorRegister from './components/vendor/VendorRegister';
 import VendorDashboard from './components/vendor/Vendordashboard';
+import AdminRegister from './components/admin/AdminRegister';
+import AdminLogin from './components/admin/AdminLogin';
 
 
 
@@ -75,6 +77,9 @@ const App = () => {
         {/* admin routes */}
         <Route path="/admin/*" element={<Admin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/register" element={<AdminRegister />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+
 
         <Route path="/weddings/destination-wedding" element={<DestinationWedding />} />
         <Route path="/weddings/beach-wedding" element={<BeachDestination />} />
